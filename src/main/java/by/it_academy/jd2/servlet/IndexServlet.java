@@ -29,7 +29,7 @@ public class IndexServlet extends HttpServlet {
                 "  <input type=\"radio\" name=\"singer\" value=\"Филипп Микрофонов\">Филипп Микрофонов<Br>\n" +
                 "  <input type=\"radio\" name=\"singer\" value=\"Николай Фонограммов\">Николай Фонограммов</p>\n" +
                 "  \n" +
-                "  <p><b>Ваши любимые жанры?</b></p>\n" +
+                "  <p><b>Ваши любимые жанры?(от трëх до пяти) </b></p>\n" +
                 "  <input type=\"checkbox\" name=\"genre\" value=\"Рок\">Рок</p>\n" +
                 "  <input type=\"checkbox\" name=\"genre\" value=\"Рэп\">Рэп</p>\n" +
                 "  <input type=\"checkbox\" name=\"genre\" value=\"Джаз\">Джаз</p>\n" +
