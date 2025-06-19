@@ -118,4 +118,11 @@ public class VoteService {
     public void addAbout(String about) {
         abouts.addLast(new About(about));
     }
+    public List<String> getSingerNames(){
+        List<String> singerNames = new ArrayList<>();
+        for (Singer singer : singers) {
+            singerNames.add(singer.getName());
+        }
+        return singerNames;
+    }
 }

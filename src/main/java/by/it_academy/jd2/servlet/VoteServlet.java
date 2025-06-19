@@ -26,10 +26,10 @@ public class VoteServlet extends HttpServlet {
             resp.sendError(404, "Такого исполнителя нет в списке!");
         }
         if(genres == null || genres.length == 0){
-            resp.sendError(400, "Нужно выбрать от одного до пяти жанров!");
+            resp.sendError(400, "Нужно выбрать от трёх до пяти жанров!");
         }
         if(genres.length < 3|| genres.length > 5){
-            resp.sendError(400, "Нужно выбрать от одного до пяти жанров!");
+            resp.sendError(400, "Нужно выбрать от трёх до пяти жанров!");
         }
         for(String genre : genres){
             if(!voteService.addGenreVote(genre)){
