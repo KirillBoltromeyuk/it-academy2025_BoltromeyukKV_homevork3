@@ -14,7 +14,7 @@
 <form action="/Homework3-1.0-SNAPSHOT/vote" method="POST">
     <p><b>Ваш любимый исполнитель?</b></p>
     <c:forEach items="${artistsList}" var="item">
-        <p><input type="radio" name="singer" value="${item.getName()}">${item.getName()}</p>
+        <p><input type="radio" name="artist" value="${item.getName()}">${item.getName()}</p>
     </c:forEach>
 
     <p><b>Ваши любимые жанры?</b></p>

@@ -1,46 +1,56 @@
-package by.it_academy.jd2.servlet;
+package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.dto.About;
+import by.it_academy.jd2.dto.Artist;
+import by.it_academy.jd2.dto.Genre;
+import by.it_academy.jd2.dto.Vote;
 import by.it_academy.jd2.service.VoteService;
+import by.it_academy.jd2.service.api.IVoteService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/vote")
 public class VoteServlet extends HttpServlet {
-    VoteService voteService = new VoteService();
+    IVoteService voteService = new VoteService();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
-        String singer = req.getParameter("singer");
-        String[] genres = req.getParameterValues("genre");
+        String artistName = req.getParameter("artist");
+        String[] genreNames = req.getParameterValues("genre");
         String about = req.getParameter("about");
 
-        if(singer == null){
+        if (artistName == null) {
             resp.sendError(400, "Нужно выбрать одного исполнителя!");
         }
-        if(!voteService.addSingerVote(singer)){
-            resp.sendError(404, "Такого исполнителя нет в списке!");
-        }
-        if(genres == null || genres.length == 0){
+        if (genreNames == null || genreNames.length == 0) {
             resp.sendError(400, "Нужно выбрать от трёх до пяти жанров!");
         }
-        if(genres.length < 3|| genres.length > 5){
+        assert genreNames != null;
+        if (genreNames.length < 3 || genreNames.length > 5) {
             resp.sendError(400, "Нужно выбрать от трёх до пяти жанров!");
         }
-        for(String genre : genres){
-            if(!voteService.addGenreVote(genre)){
-                resp.sendError(404,"Такого жанра нет в списке!");
-            }
-        }
-        if (about == null){
+        if (about == null) {
             resp.sendError(400, "Поле о себе не должно быть пустым");
         }
-        voteService.addAbout(about);
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.sendRedirect(req.getContextPath() + "/result");
+
+
+        List<Genre> genres = new ArrayList<>();
+        for (String genreName : genreNames) {
+            genres.add(new Genre(genreName));
+        }
+
+        Vote vote = new Vote(new Artist(artistName), genres, new About(about));
+        if(voteService.addVote(vote) ) resp.sendRedirect("/result");
+        else resp.sendError(500 ,"Голос не был добавлен!");
+
     }
 }
